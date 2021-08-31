@@ -19,7 +19,7 @@ public class PassManager {
         return random.nextString();
 
     }
-
+    /*Handles the encryption of files upon closing the program*/
     private static void pass_manager_exit(String inputFile) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         FileInputStream master = new FileInputStream("MasterPass.txt");
         byte[] master_pass_from_file = master.readAllBytes();
@@ -44,7 +44,7 @@ public class PassManager {
         old.delete();
         System.out.println("Goodbye...");
     }
-
+    /*Runs if no exitsting master password file is found upon start up*/
     private static void first_time_intialize() throws IOException, NoSuchProviderException, NoSuchAlgorithmException, InvalidKeySpecException {
         File master_file = new File("MasterFile.txt");
         master_file.createNewFile();
@@ -70,7 +70,7 @@ public class PassManager {
         }
 
     }
-
+    /*Handles interface and flow of program during execution*/
     private static boolean driver() throws NoSuchProviderException, NoSuchAlgorithmException, IOException, InvalidKeySpecException {
         System.out.println("Welcome to password manager!");
         String master_password = "";
@@ -99,7 +99,7 @@ public class PassManager {
 
         }
             return true;}
-
+    /*Checks the entered password against the stored master password*/
     private static boolean checkPass(String entered_master) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         FileInputStream master = new FileInputStream("MasterPass.txt");
         byte[] master_pass_from_file = master.readAllBytes();
@@ -111,7 +111,7 @@ public class PassManager {
         master.close();
         return (Arrays.equals(hashed_entered, master_pass_from_file));
     }
-
+    /* searches master file for password and returns password*/
     private static void get_password(String domain) throws IOException {
         FileReader passwords = new FileReader("MasterFiled.txt");
         Scanner reader = new Scanner(passwords);
@@ -127,7 +127,7 @@ public class PassManager {
         reader.close();
         passwords.close();
     }
-
+    /*adds an account to the master file*/
     private static void register_account(String domain, String username, int length) throws IOException {
         FileWriter writer = new FileWriter("MasterFiled.txt", true);
         String password = generateRandom(length);
@@ -135,7 +135,7 @@ public class PassManager {
         writer.write("Domain: " + domain + " Username: " + username + " Password: " + password + "\n");
         writer.close();
     }
-
+    /*Opens and decrypts the stored master file*/
     private static void open_file(String inputFile) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         FileInputStream master = new FileInputStream("MasterPass.txt");
         byte[] master_pass_from_file = master.readAllBytes();
@@ -158,7 +158,7 @@ public class PassManager {
         master.close();
 
     }
-
+    /* Removes an account from the stored master file*/
     private static void delete_account(String account) throws IOException {
         File input = new File("MasterFiled.txt");
         File temp = new File("Tempfile.txt");
@@ -175,7 +175,7 @@ public class PassManager {
         reader.close();
         temp.renameTo(input);
     }
-
+    /*Handles main menu during program execution*/
     private static void main_menu() throws IOException, NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException, InvalidKeySpecException {
         int choice = 0;
         //open_file("MasterFile.txt");
